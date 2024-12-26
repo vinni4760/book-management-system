@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,16 +21,27 @@ import com.nt.request.CreateUserRequest;
 
 @Service
 public class UserServiceimpl implements IUserService {
+
 @Autowired
 private IRoleRepository roleRepository;
+
 @Autowired
 private IUserRepository  userRepository;
+
 @Autowired
 private PasswordEncoder encoder;
+
 @Autowired
 private ModelMapper mapper;
+
+
+ Logger logger = LoggerFactory.getLogger(UserServiceimpl.class);
+
 	@Override
 	public User addUser(CreateUserRequest request) {
+
+		logger.info("Inside addUser:{}",request.getEmail());
+
 	Roles roles  = 	roleRepository.findByRole("ROLE_USER");
 	      Set<Roles> userroles = new HashSet<Roles>();
 	      userroles.add(roles);

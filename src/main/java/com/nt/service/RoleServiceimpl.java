@@ -11,6 +11,7 @@ public class RoleServiceimpl implements IRoleService {
 
 	@Autowired
 	private IRoleRepository iRoleRepository;
+
 	@Override
 	public void addRole(Roles role) {
 		iRoleRepository.save(role);
