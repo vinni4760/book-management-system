@@ -2,6 +2,7 @@ package com.nt.dto;
 
 import java.util.Collection;
 
+import com.nt.entity.Book;
 import com.nt.entity.Roles;
 
 import lombok.Getter;
@@ -13,5 +14,6 @@ public class UserDto {
 
 	 private Integer id;
 	 private String email;
-	 private Collection<Roles> roles;
+//	 private Collection<Roles> roles;
+	 private Collection<Book> books;
 }

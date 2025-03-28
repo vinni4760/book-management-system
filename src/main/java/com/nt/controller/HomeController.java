@@ -28,41 +28,41 @@ import com.nt.service.IUserService;
 public class HomeController {
     @Autowired
     private IUserService userService;
-    
+
     @Autowired
     private JwtService jwtService;
-    
+
     @Autowired
     private AuthenticationManager authenticationManager;
-	 
-	    @GetMapping("/home")
-	    public ResponseEntity<String> showhome(){
-	    	String msg = "Welcome Home";
-	    	return new ResponseEntity<>(msg,HttpStatus.OK);
-	    }
-	    
-	    @PostMapping("/register")
-	    public ResponseEntity<String> registeruser(@RequestBody CreateUserRequest createUserRequest){
-	    	User user = userService.addUser(createUserRequest);
-	    	return new ResponseEntity<String>("User Created",HttpStatus.CREATED);
-	    }
-	    
-	    @PostMapping("/authenticate")
-	    public ResponseEntity<String> loginapi(@RequestParam String email,@RequestParam String password){
-	       
-	    	 Authentication  authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
-	    	String msg = null;
-	    	 if(authentication.isAuthenticated())
-	    	msg =	jwtService.generateToken(authentication);
-	    	SecurityContextHolder.getContext()
-			.setAuthentication(authentication);
-	    	return new ResponseEntity<String>(msg ,HttpStatus.OK);
-	    }
-	    
-	    @PreAuthorize("hasRole('ROLE_ADMIN')")
-	    @GetMapping("/all")
-	    public ResponseEntity<List<UserDto>> getallUserapi(){
-	    	List<UserDto> userDtos = userService.getallusers();
- 	    	return new ResponseEntity<List<UserDto>>(userDtos,HttpStatus.ACCEPTED);
-	    }
+
+    @GetMapping("/home")
+    public ResponseEntity<String> showhome() {
+        String msg = "Welcome Home";
+        return new ResponseEntity<>(msg, HttpStatus.OK);
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<String> registeruser(@RequestBody CreateUserRequest createUserRequest) {
+        User user = userService.addUser(createUserRequest);
+        return new ResponseEntity<String>("User Created", HttpStatus.CREATED);
+    }
+
+    @PostMapping("/authenticate")
+    public ResponseEntity<String> loginapi(@RequestParam String email, @RequestParam String password) {
+
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+        String msg = null;
+        if (authentication.isAuthenticated())
+            msg = jwtService.generateToken(authentication);
+        SecurityContextHolder.getContext()
+                .setAuthentication(authentication);
+        return new ResponseEntity<String>(msg, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/all")
+    public ResponseEntity<List<UserDto>> getallUserapi() {
+        List<UserDto> userDtos = userService.getallusers();
+        return new ResponseEntity<List<UserDto>>(userDtos, HttpStatus.ACCEPTED);
+    }
 }

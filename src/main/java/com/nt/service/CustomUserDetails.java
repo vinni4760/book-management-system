@@ -2,14 +2,11 @@ package com.nt.service;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-
 import com.nt.entity.User;
 
 @Component
@@ -37,6 +34,7 @@ public class CustomUserDetails implements UserDetails{
        return this.authorities;
 	}
 
+
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub
@@ -48,5 +46,11 @@ public class CustomUserDetails implements UserDetails{
 		// TODO Auto-generated method stub
 		return this.email;
 	}
+
+	public Integer getId(){
+		 return this.id;
+	}
+
+
 
 }

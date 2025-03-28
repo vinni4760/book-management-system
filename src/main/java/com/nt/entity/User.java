@@ -2,28 +2,17 @@ package com.nt.entity;
 
 import java.util.Collection;
 import java.util.HashSet;
-
-import org.hibernate.annotations.ManyToAny;
-
+import java.util.Set;
+import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
-@Data
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "users")
 public class User {
 	
 	@Id
@@ -35,10 +24,19 @@ public class User {
 	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	@JoinTable(
-	        name = "User_Roles", joinColumns = 
+	        name = "Users_Roles", joinColumns =
 	        @JoinColumn(name="user_id",referencedColumnName = "id"),
 	        inverseJoinColumns = @JoinColumn(name="role_id",referencedColumnName = "id")
 	    )
 	private Collection<Roles> roles = new HashSet<Roles>();
+
+
+	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@JoinTable(
+			name = "User_Books",
+			joinColumns = @JoinColumn(name = "user_id",referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(name = "book_id",referencedColumnName = "id")
+	)
+	private Set<Book> books = new HashSet<>();
 
 }
